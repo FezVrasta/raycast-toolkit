@@ -1,6 +1,6 @@
 {
   "name": "raycast-toolkit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Utilities and Components to extend the Raycast Extensions API functionalities",
   "type": "module",
   "main": "dist/index.mjs",
