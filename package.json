@@ -4,12 +4,13 @@
   "description": "Utilities and Components to extend the Raycast Extensions API functionalities",
   "type": "module",
   "main": "dist/index.mjs",
+  "files":["dist"],
   "repository": "https://github.com/FezVrasta/raycast-toolkit.git",
   "author": "Federico Zivolo <federico.zivolo@gmail.com>",
   "license": "MIT",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "yarn tsc -p tsconfig.json && yarn tsc-esm -p tsconfig.json"
+    "prepare": "tsc -p tsconfig.json && tsc-esm -p tsconfig.json"
   },
   "peerDependencies": {
     "@raycast/api": "*",
