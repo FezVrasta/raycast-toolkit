@@ -4,7 +4,7 @@
   "description": "Utilities and Components to extend the Raycast Extensions API functionalities",
   "type": "module",
   "main": "dist/index.mjs",
-  "files":["/dist"],
+  "files":["dist"],
   "repository": "https://github.com/FezVrasta/raycast-toolkit.git",
   "author": "Federico Zivolo <federico.zivolo@gmail.com>",
   "license": "MIT",
