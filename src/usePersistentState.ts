@@ -34,8 +34,9 @@ export function usePersistentState<T>(
     };
   }, []);
 
-  const setStateAndLocalStorage = useCallback((updater) => {
+  const setStateAndLocalStorage = useCallback((updater: SetStateAction<T>) => {
     setState((state) => {
+      // @ts-ignore TS struggles to infer the types as T could potentially be a function
       const newValue = typeof updater === 'function' ? updater(state) : updater;
       LocalStorage.setItem(key, JSON.stringify(newValue));
       return newValue;
