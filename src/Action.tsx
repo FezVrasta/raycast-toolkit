@@ -8,25 +8,33 @@ interface SelectFileProps
   prompt?: string;
   type?: string;
   onSelect(filePath: string): unknown;
+  onError(): unknown;
 }
 
 export const SelectFile = ({
   onSelect,
+  onError,
   prompt = 'Please select a file',
   type,
   ...props
 }: SelectFileProps): JSX.Element => {
   const handleSelectFromFinder = useCallback(async () => {
-    const path = await runAppleScript(`
-      set chosenFile to choose file with prompt "${prompt}:"${
-      type != null ? `of type {"${type}"}` : ''
-    }
-      set raycastPath to POSIX path of (path to application "Raycast")
-      do shell script "open " & raycastPath
-      return POSIX path of chosenFile
-    `);
-    if (path) {
-      onSelect(path);
+    try {
+      const path = await runAppleScript(`
+        set chosenFile to choose file with prompt "${prompt}:"${
+        type != null ? `of type {"${type}"}` : ''
+      }
+        set raycastPath to POSIX path of (path to application "Raycast")
+        do shell script "open " & raycastPath
+        return POSIX path of chosenFile
+      `);
+      if (path) {
+        onSelect(path);
+      } else {
+        onError()
+      }
+    } catch(e) {
+      onError()
     }
   }, []);
 
