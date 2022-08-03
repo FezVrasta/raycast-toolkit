@@ -7,13 +7,11 @@ interface SelectFileProps
   extends Omit<ComponentProps<typeof Action>, 'onAction'> {
   prompt?: string;
   type?: string;
-  onSelect(filePath: string): unknown;
-  onError(): unknown;
+  onSelect(filePath: string|null): unknown;
 }
 
 export const SelectFile = ({
   onSelect,
-  onError,
   prompt = 'Please select a file',
   type,
   ...props
@@ -31,10 +29,10 @@ export const SelectFile = ({
       if (path) {
         onSelect(path);
       } else {
-        onError()
+        onSelect(null);
       }
     } catch(e) {
-      onError()
+      onSelect(null);
     }
   }, []);
 
