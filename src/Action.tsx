@@ -7,7 +7,7 @@ interface SelectFileProps
   extends Omit<ComponentProps<typeof Action>, 'onAction'> {
   prompt?: string;
   type?: string;
-  onSelect(filePath: string): unknown;
+  onSelect(filePath: string|null): unknown;
 }
 
 export const SelectFile = ({
@@ -17,16 +17,22 @@ export const SelectFile = ({
   ...props
 }: SelectFileProps): JSX.Element => {
   const handleSelectFromFinder = useCallback(async () => {
-    const path = await runAppleScript(`
-      set chosenFile to choose file with prompt "${prompt}:"${
-      type != null ? `of type {"${type}"}` : ''
-    }
-      set raycastPath to POSIX path of (path to application "Raycast")
-      do shell script "open " & raycastPath
-      return POSIX path of chosenFile
-    `);
-    if (path) {
-      onSelect(path);
+    try {
+      const path = await runAppleScript(`
+        set chosenFile to choose file with prompt "${prompt}:"${
+        type != null ? `of type {"${type}"}` : ''
+      }
+        set raycastPath to POSIX path of (path to application "Raycast")
+        do shell script "open " & raycastPath
+        return POSIX path of chosenFile
+      `);
+      if (path) {
+        onSelect(path);
+      } else {
+        onSelect(null);
+      }
+    } catch(e) {
+      onSelect(null);
     }
   }, []);
 
